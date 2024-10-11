@@ -1,0 +1,46 @@
+program: exp/run.py
+method: grid
+metric:
+  name: val_acc
+  goal: maximize
+parameters:
+  model:
+    distribution: constant
+    value: 'GCN'
+  d:
+    distribution: categorical
+    values: [2, 3, 4, 5]
+  dataset:
+    distribution: categorical
+    values: ['cornell', 'texas', 'wisconsin']
+  layers:
+    distribution: categorical
+    values: [2, 3, 4, 5]
+  hidden_channels:
+    distribution: categorical
+    values: [8, 32]
+  dropout:
+    distribution: categorical
+    values: [0.0, 0.3, 0.6]
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}
+  - --epochs=500
+  - --lr=0.01
+  - --add_hp=True
+  - --add_lp=True
+  - --input_dropout=0.0
+  - --early_stopping=200
+  - --folds=10
+  - --left_weights=True
+  - --right_weights=True
+  - --use_act=True
+  - --normalised=True
+  - --edge_weights=True
+  - --use_kl=True
+  - --sheaf_use_deg=False
+  - --permute_masks=True
+  - --num_ensemble=3
+  - --entity=${ENTITY}
