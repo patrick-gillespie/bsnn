@@ -1,4 +1,5 @@
 # Copyright 2022 Twitter, Inc.
+# Modifications 2024 Patrick Gillespie
 # SPDX-License-Identifier: Apache-2.0
 
 import torch
@@ -274,10 +275,17 @@ class WebKB(InMemoryDataset):
 
 
 def get_fixed_splits(data, dataset_name, seed):
-    with np.load(f'splits/{dataset_name}_split_0.6_0.2_{seed}.npz') as splits_file:
-        train_mask = splits_file['train_mask']
-        val_mask = splits_file['val_mask']
-        test_mask = splits_file['test_mask']
+    if permute_masks:
+        with np.load(f'splits/{dataset_name}_split_0.6_0.2_{seed}.npz') as splits_file:
+            train_mask = splits_file['val_mask']
+            val_mask = splits_file['test_mask']
+            test_mask = splits_file['train_mask']
+
+    else:
+        with np.load(f'splits/{dataset_name}_split_0.6_0.2_{seed}.npz') as splits_file:
+            train_mask = splits_file['train_mask']
+            val_mask = splits_file['val_mask']
+            test_mask = splits_file['test_mask']
 
     data.train_mask = torch.tensor(train_mask, dtype=torch.bool)
     data.val_mask = torch.tensor(val_mask, dtype=torch.bool)
