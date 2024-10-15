@@ -1,7 +1,7 @@
 # Bayesian Sheaf Neural Networks
 
 This repository contains the code for the paper 
-**Bayesian Sheaf Neural Networks**.
+**[Bayesian Sheaf Neural Networks](https://arxiv.org/abs/2410.09590)**.
 
 ## Getting started
 
