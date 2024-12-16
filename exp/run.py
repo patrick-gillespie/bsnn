@@ -42,11 +42,11 @@ def train(model, optimizer, data, args, epoch):
     # beta is scalar used to cyclically anneal kl loss term
     beta = torch.sigmoid(torch.tensor((epoch % 40) / 2 - 10))
 
-    if args.bayes_model:
+    if args['bayes_model']:
         out, kl = model(data.x)
         out = out[data.train_mask]
         nll = F.nll_loss(out, data.y[data.train_mask])
-        if args.use_kl:
+        if args['use_kl']:
             loss = nll + beta * kl
         else:
             loss = nll
@@ -64,9 +64,9 @@ def train(model, optimizer, data, args, epoch):
 def test(model, data, args):
     model.eval()
     with torch.no_grad():
-        if args.bayes_model:
+        if args['bayes_model']:
             probs_list = []
-            for i in range(args.num_ensemble):
+            for i in range(args['num_ensemble']):
                 logits, kl = model(data.x)
                 probs_list.append(torch.exp(logits))
             probs = torch.mean(torch.stack(probs_list), 0, keepdim=True).squeeze(0)
