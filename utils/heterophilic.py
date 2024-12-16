@@ -274,7 +274,7 @@ class WebKB(InMemoryDataset):
         return '{}()'.format(self.name)
 
 
-def get_fixed_splits(data, dataset_name, seed):
+def get_fixed_splits(data, dataset_name, seed, permute_masks):
     if permute_masks:
         with np.load(f'splits/{dataset_name}_split_0.6_0.2_{seed}.npz') as splits_file:
             train_mask = splits_file['val_mask']
