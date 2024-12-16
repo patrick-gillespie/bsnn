@@ -44,6 +44,7 @@ class SheafDiffusion(nn.Module):
         self.second_linear = args['second_linear']
         self.orth_trans = args['orth']
         self.use_edge_weights = args['edge_weights']
+        self.sheaf_use_deg = args['sheaf_use_deg']
         self.t = args['max_t']
         self.time_range = torch.tensor([0.0, self.t], device=self.device)
         self.laplacian_builder = None
